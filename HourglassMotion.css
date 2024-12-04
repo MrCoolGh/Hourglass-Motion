@@ -45,7 +45,7 @@ body {
     &__sand-mound-bottom {
         animation: {
         duration: var(--dur);
-    // note that certain animations will have keyframes with modified timing
+  
     timing-function: cubic-bezier(0.83,0,0.17,1);
         iteration-count: infinite;
     // delay: 0s;
