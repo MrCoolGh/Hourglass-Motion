@@ -1,0 +1,314 @@
+* {
+    border: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root {
+    --hue: 223;
+    --bg: hsl(var(--hue),90%,70%);
+    --fg: hsl(var(--hue),90%,10%);
+    --primary: hsl(var(--hue),90%,50%);
+    --trans-dur: 0.3s;
+    font-size: clamp(1rem,0.95rem + 0.25vw,1.25rem);
+}
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+    display: flex;
+    font: 1em/1.5 sans-serif;
+    height: 100vh;
+    transition:
+            background-color var(--trans-dur),
+            color var(--trans-dur);
+}
+.hourglass {
+    --dur: 2s;
+    display: block;
+    margin: auto;
+    width: 14em;
+    height: auto;
+
+    &__glare-top,
+    &__glare-bottom,
+    &__model,
+    &__motion-thick,
+    &__motion-medium,
+    &__motion-thin,
+    &__sand-drop,
+    &__sand-fill,
+    &__sand-grain-left,
+    &__sand-grain-right,
+    &__sand-line-left,
+    &__sand-line-right,
+    &__sand-mound-top,
+    &__sand-mound-bottom {
+        animation: {
+        duration: var(--dur);
+    // note that certain animations will have keyframes with modified timing
+    timing-function: cubic-bezier(0.83,0,0.17,1);
+        iteration-count: infinite;
+    // delay: 0s;
+    // play-state: paused;
+    };
+    }
+    &__glare {
+        &-top {
+            animation-name: glare-top;
+        }
+        &-bottom {
+            animation-name: glare-bottom;
+        }
+    }
+    &__model {
+        animation-name: hourglass-flip;
+        transform-origin: 12.25px 16.75px;
+    }
+    &__motion {
+        &-thick,
+        &-medium,
+        &-thin {
+            transform-origin: 26px 26px;
+        }
+        &-thick {
+            animation-name: motion-thick;
+        }
+        &-medium {
+            animation-name: motion-medium;
+        }
+        &-thin {
+            animation-name: motion-thin;
+        }
+    }
+    &__sand {
+        &-drop {
+            animation-name: sand-drop;
+        }
+        &-fill {
+            animation-name: sand-fill;
+        }
+        &-grain {
+            &-left {
+                animation-name: sand-grain-left;
+            }
+            &-right {
+                animation-name: sand-grain-right;
+            }
+        }
+        &-line {
+            &-left {
+                animation-name: sand-line-left;
+            }
+            &-right {
+                animation-name: sand-line-right;
+            }
+        }
+        &-mound {
+            &-top {
+                animation-name: sand-mound-top;
+            }
+            &-bottom {
+                animation-name: sand-mound-bottom;
+                transform-origin: 12.25px 31.5px;
+            }
+        }
+    }
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: hsl(var(--hue),90%,10%);
+        --fg: hsl(var(--hue),90%,90%);
+    }
+}
+
+/* Animation */
+ease-in-cubic: cubic-bezier(0.33,0,0.67,0);
+ease-out-cubic: cubic-bezier(0.33,1,0.67,1);
+ease-in-sine: cubic-bezier(0.12,0,0.39,0);
+ease-out-sine: cubic-bezier(0.61,1,0.88,1);
+
+@keyframes hourglass-flip {
+    from {
+        transform: translate(13.75px,9.25px) rotate(-180deg);
+    }
+    24%,
+    to {
+        transform: translate(13.75px,9.25px) rotate(0);
+    }
+}
+@keyframes glare-top {
+    from {
+        stroke: hsla(0,0%,100%,0);
+    }
+    24%,
+    to {
+        stroke: hsl(0,0%,100%);
+    }
+}
+@keyframes glare-bottom {
+    from {
+        stroke: hsl(0,0%,100%);
+    }
+    24%,
+    to {
+        stroke: hsla(0,0%,100%,0);
+    }
+}
+@keyframes motion-thick {
+    from {
+        animation-timing-function: $ease-in-cubic;
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(0.67turn);
+    }
+    20% {
+        stroke: hsl(0,0%,100%);
+        stroke-dashoffset: 141.11;
+        transform: rotate(1turn);
+    }
+    20% {
+        animation-timing-function: ease-out-cubic;
+    }
+    40%,
+    to {
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(1.33turn);
+    }
+}
+@keyframes motion-medium {
+    from,
+    8% {
+        animation-timing-function: $ease-in-cubic;
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(0.5turn);
+    }
+    20% {
+        animation-timing-function: $ease-out-cubic;
+        stroke: hsl(0,0%,100%);
+        stroke-dashoffset: 147.53;
+        transform: rotate(0.83turn);
+    }
+    32%,
+    to {
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(1.17turn);
+    }
+}
+@keyframes motion-thin {
+    from,
+    4% {
+        animation-timing-function: $ease-in-cubic;
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(0.33turn);
+    }
+    24% {
+        animation-timing-function: $ease-out-cubic;
+        stroke: hsl(0,0%,100%);
+        stroke-dashoffset: 134.7;
+        transform: rotate(0.67turn);
+    }
+    44%,
+    to {
+        stroke: hsla(0,0%,100%,0);
+        stroke-dashoffset: 153.94;
+        transform: rotate(1turn);
+    }
+}
+@keyframes sand-drop {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 1;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -107;
+    }
+}
+@keyframes sand-fill {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 55;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -54;
+    }
+}
+@keyframes sand-grain-left {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 29;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -22;
+    }
+}
+@keyframes sand-grain-right {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 27;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -24;
+    }
+}
+@keyframes sand-line-left {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 53;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -55;
+    }
+}
+@keyframes sand-line-right {
+    from,
+    10% {
+        animation-timing-function: $ease-in-sine;
+        stroke-dashoffset: 14;
+    }
+    70%,
+    to {
+        stroke-dashoffset: -24.5;
+    }
+}
+@keyframes sand-mound-top {
+    from,
+    10% {
+        animation-timing-function: linear;
+        transform: translate(0,0);
+    }
+    15% {
+        animation-timing-function: $ease-in-sine;
+        transform: translate(0,1.5px);
+    }
+    51%,
+    to {
+        transform: translate(0,13px);
+    }
+}
+@keyframes sand-mound-bottom {
+    from,
+    31% {
+        animation-timing-function: $ease-out-sine;
+        transform: scale(1,0);
+    }
+    56%,
+    to {
+        transform: scale(1,1);
+    }
+}
